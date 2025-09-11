@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\PostProcessed;
 use App\Http\Requests\Api\PostRequest;
 use App\Models\Post;
 use Illuminate\Http\JsonResponse;
@@ -12,15 +13,15 @@ use Inertia\Response;
 
 class PostController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request)
     {
-        $posts = Post::get();
+        $posts = Post::select('id','body','title','published','user_id')
+                    ->with('user:id,name,email')
+                    ->where('user_id', $request->user()->id)
+                    ->get()
+                    ->makeHidden('user_id');
+        
         return response()->json($posts);
-    }
-
-    public function show(Post $post): JsonResponse
-    {
-        return response()->json($post->load('user'));
     }
 
     public function create(): Response
@@ -33,11 +34,9 @@ class PostController extends Controller
         $data = $request->validated();
         $data['user_id'] = $request->user()->id;
 
-
         $post = Post::create($data);
 
-        SendNewPostNotificationJob::dispatch($post->id)->onQueue('emails');
-
+        PostProcessed::dispatch($request->title);
 
         return response()->json([
             'message' => 'Post created',
@@ -45,9 +44,10 @@ class PostController extends Controller
         ], 201);
     }
     
-    function edit($id): Response  {
+    public function edit($id): Response  {
 
         $post = Post::findOrFail($id);
+
         return Inertia::render('Posts/Edit', ["post"=> $post]);
     }
 

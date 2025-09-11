@@ -28,9 +28,8 @@ class TokenAuthController extends Controller
 
         if (!$user || !Hash::check($request->password, $user->password)) {
              return response()->json([
-                'errors' => [
-                    'email' => ['Invalid email or password.']
-                ]
+                'errors' => ['Invalid email or password.']
+
             ], 422);
         }
 

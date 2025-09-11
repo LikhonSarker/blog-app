@@ -25,10 +25,6 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        // Send email verification notification
-        $user->sendEmailVerificationNotification();
-
-        // Create token
         $token = $user->createToken('react-app-token')->plainTextToken;
 
         return response()->json([

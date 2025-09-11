@@ -26,7 +26,6 @@ export default function Register() {
                 data
             );
 
-            localStorage.setItem("token", res.data.token);
             Inertia.visit("/dashboard");
         } catch (err) {}
     };

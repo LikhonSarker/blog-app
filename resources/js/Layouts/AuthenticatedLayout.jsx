@@ -45,21 +45,13 @@ export default function AuthenticatedLayout({ children }) {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav
-                className="border-b border-gray-100 bg-white"
-                style={{ padding: "0 20px" }}
-            >
+        <div className="min-h-screen h-screen bg-gray-100 overflow-y-hidden flex flex-col">
+            <nav className="border-b border-gray-100 bg-white px-5">
                 <div className="mx-auto">
                     <div className="flex h-16 justify-between">
-                        <div
-                            style={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "center",
-                            }}
-                        >
+                        <div className="flex items-center gap-2">
                             <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                            <p>Content Flow</p>
                         </div>
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center">
@@ -90,11 +82,6 @@ export default function AuthenticatedLayout({ children }) {
                                     </Dropdown.Trigger>
 
                                     <Dropdown.Content>
-                                        <Dropdown.Link
-                                            href={route("profile.edit")}
-                                        >
-                                            Profile
-                                        </Dropdown.Link>
                                         <Dropdown.Link
                                             onClick={handleLogOut}
                                             as="button"
@@ -166,9 +153,6 @@ export default function AuthenticatedLayout({ children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route("profile.edit")}>
-                                Profile
-                            </ResponsiveNavLink>
                             <ResponsiveNavLink
                                 as="button"
                                 onClick={handleLogOut}
@@ -179,7 +163,7 @@ export default function AuthenticatedLayout({ children }) {
                     </div>
                 </div>
             </nav>
-            <main>{children}</main>
+            <main className="overflow-y-auto">{children}</main>
         </div>
     );
 }

@@ -20,7 +20,7 @@ class Post extends Model
         'published' => "boolean",
     ];
 
-    protected function user(){
+    public function user(){
         return $this->belongsTo(User::class);
     }
 }

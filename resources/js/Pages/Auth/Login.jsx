@@ -54,6 +54,11 @@ export default function Login({ status }) {
                 </div>
             )}
 
+            <InputError
+                message={get(data, "errors", "")}
+                className="mb-2 font-bold"
+            />
+
             <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
@@ -68,11 +73,6 @@ export default function Login({ status }) {
                         isFocused={true}
                         onChange={(e) => setData("email", e.target.value)}
                     />
-
-                    <InputError
-                        message={get(data, "errors.email", "")}
-                        className="mt-2"
-                    />
                 </div>
 
                 <div className="mt-4">
@@ -86,11 +86,6 @@ export default function Login({ status }) {
                         className="mt-1 block w-full"
                         autoComplete="current-password"
                         onChange={(e) => setData("password", e.target.value)}
-                    />
-
-                    <InputError
-                        message={get(data, "errors.password", "")}
-                        className="mt-2"
                     />
                 </div>
 

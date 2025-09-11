@@ -56,7 +56,7 @@ const Posts = () => {
 
             <a
                 href="/posts/create"
-                className="bg-blue-500 text-white px-4 py-2 rounded mb-4 inline-block"
+                className="hover:bg-blue-100 focus:bg-blue-500 focus:text-white px-4 py-2 rounded mb-4 inline-block border-2 border-blue-500"
             >
                 Create New Post
             </a>
@@ -68,15 +68,19 @@ const Posts = () => {
                 {posts.map((post) => (
                     <li
                         key={post.id}
-                        className="border p-4 rounded mb-2 flex justify-between items-start"
+                        className="border p-4 rounded mb-2 flex justify-between items-start hover:border-blue-500"
                     >
                         <div>
                             <h2 className="text-xl font-semibold">
                                 {post.title}
                             </h2>
+
                             <p className="text-gray-700">
-                                {post.body.substring(0, 200)}...
+                                {post.body.length > 200
+                                    ? `${post.body.substring(0, 200)}...`
+                                    : post.body}
                             </p>
+
                             <p className="text-gray-500 text-sm">
                                 Author: {post.user?.name || "Unknown"}
                             </p>
@@ -84,13 +88,13 @@ const Posts = () => {
                         <div className="flex gap-2">
                             <a
                                 href={`/posts/${post.id}/edit`}
-                                className="bg-gray-400 text-white px-3 py-1 rounded"
+                                className="border-2 border-blue-300 px-3 py-1 rounded hover:border-blue-500"
                             >
                                 <FontAwesomeIcon icon={faEdit} />
                             </a>
                             <button
                                 onClick={() => deletePost(post.id)}
-                                className="bg-red-500 text-white px-3 py-1 rounded"
+                                className="border-2 border-red-300 px-3 py-1 rounded hover:border-red-500"
                             >
                                 <FontAwesomeIcon icon={faTrash} />
                             </button>
